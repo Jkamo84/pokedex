@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+    body {
+        background: skyblue;
+        font-family: monospace;
+        padding: 20px;
+    }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    tr {
+        background-color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h2>{{ welcome_message }}</h2>
+
+<form method='POST' action="/pokedex/">
+    {% csrf_token %}
+    {{ form }}
+    <br><br><input type="submit" value="Submit"><br><br>
+</form> 
+
+{% if pokemon %}
+    <table>
+        <tr>
+            <th>Pokedex ID</th>
+            <th>Name</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>Health</th>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>S. Attack</th>
+            <th>S. Defense</th>
+            <th>Speed</th>
+        </tr>
+            <td>{{pokemon.pokedex_id}}</td>
+            <td>{{pokemon.name}}</td>
+            <td>{{pokemon.height}}</td>
+            <td>{{pokemon.weight}}</td>
+            <td>{{pokemon.health}}</td>
+            <td>{{pokemon.attack}}</td>
+            <td>{{pokemon.defense}}</td>
+            <td>{{pokemon.special_attack}}</td>
+            <td>{{pokemon.special_defense}}</td>
+            <td>{{pokemon.speed}}</td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if pre_evolutions %}
+    <h3>Pre-Evolutions</h3>
+    <table style='width:30%'>
+        <tr>
+            <th>Pokedex ID</th>
+            <th>Name</th>
+        </tr>
+    {% for pre_evolution in pre_evolutions %}
+        <tr>
+            <td>{{pre_evolution.pokedex_id}}</td>
+            <td>{{pre_evolution.name}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+
+{% if evolutions %}
+    <h3>Evolutions</h3>
+    <table style='width:30%'>
+        <tr>
+            <th>Pokedex ID</th>
+            <th>Name</th>
+        </tr>
+    {% for evolution in evolutions %}
+            <tr>
+                <td>{{evolution.pokedex_id}}</td>
+                <td>{{evolution.name}}</td>
+            </tr>
+    {% endfor %}
+    </table>
+{% endif %}
+
+{% if not_found %}
+    {{not_found}}
+{% endif %}
+
+</body>
+</html>
